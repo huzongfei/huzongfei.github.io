@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"huzongfei.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="异常Java 异常类层次结构图概览：  1.Exception 和 Error 有什么区别？在 Java 中，所有的异常都有一个共同的祖先 java.lang 包中的 Throwable 类。Throwable 类有两个重要的子类: Exception :程序本身可以处理的异常，可以通过 catch 来进行捕获。Exception 又可以分为 Checked Exception (受检查异常，必须">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Java面试总结">
+<meta property="og:url" content="https://huzongfei.github.io/java%E5%9F%BA%E7%A1%80/Java%E5%9F%BA%E7%A1%80%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93%EF%BC%88%E4%B8%8B%EF%BC%89.html">
+<meta property="og:site_name" content="Java面试总结">
+<meta property="og:description" content="异常Java 异常类层次结构图概览：  1.Exception 和 Error 有什么区别？在 Java 中，所有的异常都有一个共同的祖先 java.lang 包中的 Throwable 类。Throwable 类有两个重要的子类: Exception :程序本身可以处理的异常，可以通过 catch 来进行捕获。Exception 又可以分为 Checked Exception (受检查异常，必须">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="c:\Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240424151721592.png">
+<meta property="og:image" content="c:\Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240424152640780.png">
+<meta property="og:image" content="c:\Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240424152848442.png">
+<meta property="og:image" content="c:\Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240424154532054.png">
+<meta property="og:image" content="c:\Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240424154551300.png">
+<meta property="og:image" content="c:\Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240424154629140.png">
+<meta property="og:image" content="c:\Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240424154653779.png">
+<meta property="og:image" content="c:\Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240424154716668.png">
+<meta property="og:image" content="c:\Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240424154819692.png">
+<meta property="og:image" content="c:\Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240424154844326.png">
+<meta property="og:image" content="c:\Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240424155858229.png">
+<meta property="og:image" content="c:\Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240424160103501.png">
+<meta property="article:published_time" content="2024-04-24T08:03:49.344Z">
+<meta property="article:modified_time" content="2024-04-24T08:03:49.344Z">
+<meta property="article:author" content="hzf">
+<meta property="article:tag" content="java基础，java集合，设计模式">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:\Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240424151721592.png">
+
+
+<link rel="canonical" href="https://huzongfei.github.io/java%E5%9F%BA%E7%A1%80/Java%E5%9F%BA%E7%A1%80%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93%EF%BC%88%E4%B8%8B%EF%BC%89">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":true,"permalink":"https://huzongfei.github.io/java%E5%9F%BA%E7%A1%80/Java%E5%9F%BA%E7%A1%80%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93%EF%BC%88%E4%B8%8B%EF%BC%89.html","path":"java基础/Java基础常见面试题总结（下）.html","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title> | Java面试总结
+</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Java面试总结</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">奔赴山海, 保持热爱</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%82%E5%B8%B8"><span class="nav-number">1.</span> <span class="nav-text">异常</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Exception-%E5%92%8C-Error-%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-number">1.0.1.</span> <span class="nav-text">1.Exception 和 Error 有什么区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Checked-Exception-%E5%92%8C-Unchecked-Exception-%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-number">1.0.2.</span> <span class="nav-text">2. Checked Exception 和 Unchecked Exception 有什么区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Throwable-%E7%B1%BB%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="nav-number">1.0.3.</span> <span class="nav-text">3.Throwable 类常用方法有哪些？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-try-catch-finally-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%EF%BC%9F"><span class="nav-number">1.0.4.</span> <span class="nav-text">4.try-catch-finally 如何使用？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-finally-%E4%B8%AD%E7%9A%84%E4%BB%A3%E7%A0%81%E4%B8%80%E5%AE%9A%E4%BC%9A%E6%89%A7%E8%A1%8C%E5%90%97%EF%BC%9F"><span class="nav-number">1.0.5.</span> <span class="nav-text">5.finally 中的代码一定会执行吗？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-try-with-resources-%E4%BB%A3%E6%9B%BFtry-catch-finally%EF%BC%9F"><span class="nav-number">1.0.6.</span> <span class="nav-text">6.如何使用 try-with-resources 代替try-catch-finally？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-%E5%BC%82%E5%B8%B8%E4%BD%BF%E7%94%A8%E6%9C%89%E5%93%AA%E4%BA%9B%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E5%9C%B0%E6%96%B9%EF%BC%9F"><span class="nav-number">1.0.7.</span> <span class="nav-text">7.异常使用有哪些需要注意的地方？</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B3%9B%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">泛型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-%E4%BB%80%E4%B9%88%E6%98%AF%E6%B3%9B%E5%9E%8B%EF%BC%9F%E6%9C%89%E4%BB%80%E4%B9%88%E4%BD%9C%E7%94%A8%EF%BC%9F"><span class="nav-number">2.0.1.</span> <span class="nav-text">8. 什么是泛型？有什么作用？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-%E6%B3%9B%E5%9E%8B%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F%E6%9C%89%E5%93%AA%E5%87%A0%E7%A7%8D%EF%BC%9F"><span class="nav-number">2.0.2.</span> <span class="nav-text">9. 泛型的使用方式有哪几种？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-%E9%A1%B9%E7%9B%AE%E4%B8%AD%E5%93%AA%E9%87%8C%E7%94%A8%E5%88%B0%E4%BA%86%E6%B3%9B%E5%9E%8B%EF%BC%9F"><span class="nav-number">2.0.3.</span> <span class="nav-text">10.项目中哪里用到了泛型？</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%8D%E5%B0%84"><span class="nav-number">3.</span> <span class="nav-text">反射</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#11-%E4%BD%95%E8%B0%93%E5%8F%8D%E5%B0%84%EF%BC%9F"><span class="nav-number">3.0.1.</span> <span class="nav-text">11.何谓反射？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-%E5%8F%8D%E5%B0%84%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9%EF%BC%9F"><span class="nav-number">3.0.2.</span> <span class="nav-text">12.反射的优缺点？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-%E5%8F%8D%E5%B0%84%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%EF%BC%9F"><span class="nav-number">3.0.3.</span> <span class="nav-text">13.反射的应用场景？</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B3%A8%E8%A7%A3"><span class="nav-number">4.</span> <span class="nav-text">注解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#14-%E4%BD%95%E8%B0%93%E6%B3%A8%E8%A7%A3%EF%BC%9F"><span class="nav-number">4.0.1.</span> <span class="nav-text">14.何谓注解？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15-%E6%B3%A8%E8%A7%A3%E7%9A%84%E8%A7%A3%E6%9E%90%E6%96%B9%E6%B3%95%E6%9C%89%E5%93%AA%E5%87%A0%E7%A7%8D%EF%BC%9F"><span class="nav-number">4.0.2.</span> <span class="nav-text">15.注解的解析方法有哪几种？</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">hzf</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner page posts-expand">
+
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN"><header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">
+</h1>
+
+<div class="post-meta-container">
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <h1 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h1><p><strong>Java 异常类层次结构图概览</strong>：</p>
+<p><img src="C:\Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240424151721592.png" alt="image-20240424151721592"></p>
+<h3 id="1-Exception-和-Error-有什么区别？"><a href="#1-Exception-和-Error-有什么区别？" class="headerlink" title="1.Exception 和 Error 有什么区别？"></a>1.<a target="_blank" rel="noopener" href="https://javaguide.cn/java/basis/java-basic-questions-03.html#exception-%E5%92%8C-error-%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB">Exception 和 Error 有什么区别？</a></h3><p>在 Java 中，所有的异常都有一个共同的祖先 <code>java.lang</code> 包中的 <code>Throwable</code> 类。<code>Throwable</code> 类有两个重要的子类:</p>
+<p><strong><code>Exception</code></strong> :<strong>程序本身可以处理的异常</strong>，可以通过 <code>catch</code> 来进行捕获。<code>Exception</code> 又可以分为 Checked Exception (受检查异常，必须处理) 和 Unchecked Exception (不受检查异常，可以不处理)。</p>
+<p>**<code>Error</code>**：<code>Error</code> <strong>属于程序无法处理的错误</strong> ，我们没办法通过 <code>catch</code> 来进行捕获不建议通过<code>catch</code>捕获 。例如 Java 虚拟机运行错误（<code>Virtual MachineError</code>）、虚拟机内存不够错误(<code>OutOfMemoryError</code>)、类定义错误（<code>NoClassDefFoundError</code>）等 。这些异常发生时，Java 虚拟机（JVM）一般会选择线程终止。</p>
+<h3 id="2-Checked-Exception-和-Unchecked-Exception-有什么区别？"><a href="#2-Checked-Exception-和-Unchecked-Exception-有什么区别？" class="headerlink" title="2. Checked Exception 和 Unchecked Exception 有什么区别？"></a>2. <a target="_blank" rel="noopener" href="https://javaguide.cn/java/basis/java-basic-questions-03.html#checked-exception-%E5%92%8C-unchecked-exception-%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB">Checked Exception 和 Unchecked Exception 有什么区别？</a></h3><p><strong>Checked Exception</strong> 即 受检查异常 ，Java 代码在编译过程中，如果受检查异常没有被 <code>catch</code>或者<code>throws</code> 关键字处理的话，就没办法通过编译。</p>
+<p>除了<code>RuntimeException</code>及其子类以外，其他的<code>Exception</code>类及其子类都属于受检查异常 。常见的受检查异常有：IO 相关的异常、<code>ClassNotFoundException</code>、<code>SQLException</code>…。</p>
+<p><strong>Unchecked Exception</strong> 即 <strong>不受检查异常</strong> ，Java 代码在编译过程中 ，我们即使不处理不受检查异常也可以正常通过编译。</p>
+<p><code>RuntimeException</code> 及其子类都统称为非受检查异常，常见的有（建议记下来，日常开发中会经常用到）：</p>
+<ul>
+<li><code>NullPointerException</code>(空指针错误)</li>
+<li><code>IllegalArgumentException</code>(参数错误比如方法入参类型错误)</li>
+<li><code>NumberFormatException</code>（字符串转换为数字格式错误，<code>IllegalArgumentException</code>的子类）</li>
+<li><code>ArrayIndexOutOfBoundsException</code>（数组越界错误）</li>
+<li><code>ClassCastException</code>（类型转换错误）</li>
+<li><code>ArithmeticException</code>（算术错误）</li>
+<li><code>SecurityException</code> （安全错误比如权限不够）</li>
+<li><code>UnsupportedOperationException</code>(不支持的操作错误比如重复创建同一用户)</li>
+</ul>
+<h3 id="3-Throwable-类常用方法有哪些？"><a href="#3-Throwable-类常用方法有哪些？" class="headerlink" title="3.Throwable 类常用方法有哪些？"></a>3.<a target="_blank" rel="noopener" href="https://javaguide.cn/java/basis/java-basic-questions-03.html#throwable-%E7%B1%BB%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E6%9C%89%E5%93%AA%E4%BA%9B">Throwable 类常用方法有哪些？</a></h3><p><code>String getMessage()</code>: 返回异常发生时的简要描述</p>
+<p><code>String toString()</code>: 返回异常发生时的详细信息</p>
+<p><code>String getLocalizedMessage()</code>: 返回异常对象的本地化信息。使用 <code>Throwable</code> 的子类覆盖这个方法，可以生成本地化信息。如果子类没有覆盖该方法，则该方法返回的信息与 <code>getMessage()</code>返回的结果相同</p>
+<p><code>void printStackTrace()</code>: 在控制台上打印 <code>Throwable</code> 对象封装的异常信息</p>
+<h3 id="4-try-catch-finally-如何使用？"><a href="#4-try-catch-finally-如何使用？" class="headerlink" title="4.try-catch-finally 如何使用？"></a>4.<a target="_blank" rel="noopener" href="https://javaguide.cn/java/basis/java-basic-questions-03.html#try-catch-finally-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8">try-catch-finally 如何使用？</a></h3><p><code>try</code>块：用于捕获异常。其后可接零个或多个 <code>catch</code> 块，如果没有 <code>catch</code> 块，则必须跟一个 <code>finally</code> 块。</p>
+<p><code>catch</code>块：用于处理 try 捕获到的异常。</p>
+<p><code>finally</code> 块：无论是否捕获或处理异常，<code>finally</code> 块里的语句都会被执行。当在 <code>try</code> 块或 <code>catch</code> 块中遇到 <code>return</code> 语句时，<code>finally</code> 语句块将在方法返回之前被执行。</p>
+<p><img src="C:\Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240424152640780.png" alt="image-20240424152640780"></p>
+<p><strong>注意：不要在 finally 语句块中使用 return!</strong> 当 try 语句和 finally 语句中都有 return 语句时，try 语句块中的 return 语句会被忽略。这是因为 try 语句中的 return 返回值会先被暂存在一个本地变量中，当执行到 finally 语句中的 return 之后，这个本地变量的值就变为了 finally 语句中的 return 返回值。</p>
+<h3 id="5-finally-中的代码一定会执行吗？"><a href="#5-finally-中的代码一定会执行吗？" class="headerlink" title="5.finally 中的代码一定会执行吗？"></a>5.<a target="_blank" rel="noopener" href="https://javaguide.cn/java/basis/java-basic-questions-03.html#finally-%E4%B8%AD%E7%9A%84%E4%BB%A3%E7%A0%81%E4%B8%80%E5%AE%9A%E4%BC%9A%E6%89%A7%E8%A1%8C%E5%90%97">finally 中的代码一定会执行吗？</a></h3><p>不一定的！在某些情况下，finally 中的代码不会被执行。</p>
+<p>就比如说 finally 之前虚拟机被终止运行的话，finally 中的代码就不会被执行。</p>
+<p><img src="C:\Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240424152848442.png" alt="image-20240424152848442"></p>
+<p>另外，在以下 2 种特殊情况下，<code>finally</code> 块的代码也不会被执行：</p>
+<ol>
+<li>程序所在的线程死亡。</li>
+<li>关闭 CPU。</li>
+</ol>
+<h3 id="6-如何使用-try-with-resources-代替try-catch-finally？"><a href="#6-如何使用-try-with-resources-代替try-catch-finally？" class="headerlink" title="6.如何使用 try-with-resources 代替try-catch-finally？"></a>6.<a target="_blank" rel="noopener" href="https://javaguide.cn/java/basis/java-basic-questions-03.html#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-try-with-resources-%E4%BB%A3%E6%9B%BFtry-catch-finally">如何使用 <code>try-with-resources</code> 代替<code>try-catch-finally</code>？</a></h3><p><strong>适用范围（资源的定义）：</strong> 任何实现 <code>java.lang.AutoCloseable</code>或者<code>java.io.Closeable</code> 的对象</p>
+<p><strong>关闭资源和 finally 块的执行顺序：</strong> 在 <code>try-with-resources</code> 语句中，任何 catch 或 finally 块在声明的资源关闭后运行。</p>
+<p>**面对必须要关闭的资源，我们总是应该优先使用 <code>try-with-resources</code> 而不是<code>try-finally</code>**。随之产生的代码更简短，更清晰，产生的异常对我们也更有用。<code>try-with-resources</code>语句让我们更容易编写必须要关闭的资源的代码，若采用<code>try-finally</code>则几乎做不到这点。</p>
+<h3 id="7-异常使用有哪些需要注意的地方？"><a href="#7-异常使用有哪些需要注意的地方？" class="headerlink" title="7.异常使用有哪些需要注意的地方？"></a>7.<a target="_blank" rel="noopener" href="https://javaguide.cn/java/basis/java-basic-questions-03.html#%E5%BC%82%E5%B8%B8%E4%BD%BF%E7%94%A8%E6%9C%89%E5%93%AA%E4%BA%9B%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E5%9C%B0%E6%96%B9">异常使用有哪些需要注意的地方？</a></h3><ul>
+<li><strong>不要把异常定义为静态变量</strong>，因为这样会导致异常栈信息错乱。每次手动抛出异常，我们都需要手动 new 一个异常对象抛出。</li>
+<li>抛出的异常信息一定要有意义。</li>
+<li>建议抛出更加具体的异常比如字符串转换为数字格式错误的时候应该抛出<code>NumberFormatException</code>而不是其父类<code>IllegalArgumentException</code>。</li>
+<li>避免重复记录日志：如果在捕获异常的地方已经记录了足够的信息（包括异常类型、错误信息和堆栈跟踪等），那么在业务代码中再次抛出这个异常时，就不应该再次记录相同的错误信息。重复记录日志会使得日志文件膨胀，并且可能会掩盖问题的实际原因，使得问题更难以追踪和解决。</li>
+</ul>
+<h1 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h1><h3 id="8-什么是泛型？有什么作用？"><a href="#8-什么是泛型？有什么作用？" class="headerlink" title="8. 什么是泛型？有什么作用？"></a>8. <a target="_blank" rel="noopener" href="https://javaguide.cn/java/basis/java-basic-questions-03.html#%E4%BB%80%E4%B9%88%E6%98%AF%E6%B3%9B%E5%9E%8B-%E6%9C%89%E4%BB%80%E4%B9%88%E4%BD%9C%E7%94%A8">什么是泛型？有什么作用？</a></h3><p><strong>Java 泛型（Generics）</strong> 是 JDK 5 中引入的一个新特性。使用泛型参数，可以增强代码的可读性以及稳定性。</p>
+<p>编译器可以对泛型参数进行检测，并且通过泛型参数可以指定传入的对象类型。比如 <code>ArrayList&lt;Person&gt; persons = new ArrayList&lt;Person&gt;()</code> 这行代码就指明了该 <code>ArrayList</code> 对象只能传入 <code>Person</code> 对象，如果传入其他类型的对象就会报错。</p>
+<h3 id="9-泛型的使用方式有哪几种？"><a href="#9-泛型的使用方式有哪几种？" class="headerlink" title="9. 泛型的使用方式有哪几种？"></a>9. <a target="_blank" rel="noopener" href="https://javaguide.cn/java/basis/java-basic-questions-03.html#%E6%B3%9B%E5%9E%8B%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F%E6%9C%89%E5%93%AA%E5%87%A0%E7%A7%8D">泛型的使用方式有哪几种？</a></h3><p>泛型一般有三种使用方式:<strong>泛型类</strong>、<strong>泛型接口</strong>、<strong>泛型方法</strong>。</p>
+<p><strong>1.泛型类</strong>：</p>
+<p><img src="C:\Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240424154532054.png" alt="image-20240424154532054"></p>
+<p><img src="C:\Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240424154551300.png" alt="image-20240424154551300"></p>
+<p><strong>2.泛型接口</strong>：</p>
+<p><img src="C:\Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240424154629140.png" alt="image-20240424154629140"></p>
+<p><img src="C:\Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240424154653779.png" alt="image-20240424154653779"></p>
+<p><img src="C:\Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240424154716668.png" alt="image-20240424154716668"></p>
+<p><strong>3.泛型方法</strong></p>
+<p><img src="C:\Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240424154819692.png" alt="image-20240424154819692"></p>
+<p><img src="C:\Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240424154844326.png" alt="image-20240424154844326"></p>
+<p>注意: <code>public static &lt; E &gt; void printArray( E[] inputArray )</code> 一般被称为静态泛型方法;在 java 中泛型只是一个占位符，必须在传递类型后才能使用。类在实例化时才能真正的传递类型参数，由于静态方法的加载先于类的实例化，也就是说类中的泛型还没有传递真正的类型参数，静态的方法的加载就已经完成了，<strong>所以静态泛型方法是没有办法使用类上声明的泛型的</strong>。只能使用自己声明的 <code>&lt;E&gt;</code>.</p>
+<h3 id="10-项目中哪里用到了泛型？"><a href="#10-项目中哪里用到了泛型？" class="headerlink" title="10.项目中哪里用到了泛型？"></a>10.<a target="_blank" rel="noopener" href="https://javaguide.cn/java/basis/java-basic-questions-03.html#%E9%A1%B9%E7%9B%AE%E4%B8%AD%E5%93%AA%E9%87%8C%E7%94%A8%E5%88%B0%E4%BA%86%E6%B3%9B%E5%9E%8B">项目中哪里用到了泛型？</a></h3><p>自定义接口通用返回结果 <code>CommonResult&lt;T&gt;</code> 通过参数 <code>T</code> 可根据具体的返回类型动态指定结果的数据类型</p>
+<p>定义 <code>Excel</code> 处理类 <code>ExcelUtil&lt;T&gt;</code> 用于动态指定 <code>Excel</code> 导出的数据类型</p>
+<p>构建集合工具类（参考 <code>Collections</code> 中的 <code>sort</code>, <code>binarySearch</code> 方法）。</p>
+<h1 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h1><h3 id="11-何谓反射？"><a href="#11-何谓反射？" class="headerlink" title="11.何谓反射？"></a>11.<a target="_blank" rel="noopener" href="https://javaguide.cn/java/basis/java-basic-questions-03.html#%E4%BD%95%E8%B0%93%E5%8F%8D%E5%B0%84">何谓反射？</a></h3><p><strong>反射机制允许程序在运行时查询类、接口、字段和方法的信息，并且能够动态地创建和操作对象。</strong></p>
+<p>以下是 Java 反射机制的一些关键点：</p>
+<ol>
+<li><strong>动态加载类</strong>：反射可以在运行时动态地加载类，而不必在使用类之前显式地加载它。</li>
+<li><strong>访问私有成员</strong>：反射可以访问一个类的所有成员，包括私有字段和方法，这在正常情况下是无法做到的。</li>
+<li><strong>修改字段值</strong>：反射机制可以用来读取和修改私有字段的值，这对于框架和库开发者来说非常有用，可以实现通用代码来处理不同类的数据。</li>
+<li><strong>调用方法</strong>：反射机制可以让开发者调用任何对象的方法，即使这些方法在编译时是私有的。</li>
+<li><strong>生成对象</strong>：反射还可以用于动态地生成对象，这在诸如框架和脚本语言中非常常见。</li>
+<li><strong>注解处理</strong>：反射与注解（Annotations）结合使用，可以方便地处理注解信息，如自动装配、日志记录和代码生成等。</li>
+<li><strong>动态代理</strong>：反射还可以用来创建动态代理，这是 Java 代理模式的基础，用于在不修改原始类代码的情况下，添加额外的功能。</li>
+</ol>
+<h3 id="12-反射的优缺点？"><a href="#12-反射的优缺点？" class="headerlink" title="12.反射的优缺点？"></a>12.<a target="_blank" rel="noopener" href="https://javaguide.cn/java/basis/java-basic-questions-03.html#%E5%8F%8D%E5%B0%84%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9">反射的优缺点？</a></h3><p>反射可以让我们的代码更加灵活、为各种框架提供开箱即用的功能提供了便利。</p>
+<p>不过，反射让我们在运行时有了分析操作类的能力的同时，也增加了安全问题，比如可以无视泛型参数的安全检查（泛型参数的安全检查发生在编译时）。另外，反射的性能也要稍差点，不过，对于框架来说实际是影响不大的。</p>
+<h3 id="13-反射的应用场景？"><a href="#13-反射的应用场景？" class="headerlink" title="13.反射的应用场景？"></a>13.<a target="_blank" rel="noopener" href="https://javaguide.cn/java/basis/java-basic-questions-03.html#%E5%8F%8D%E5%B0%84%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF">反射的应用场景？</a></h3><p>像咱们平时大部分时候都是在写业务代码，很少会接触到直接使用反射机制的场景。但是！这并不代表反射没有用。相反，正是因为反射，你才能这么轻松地使用各种框架。像 Spring&#x2F;Spring Boot、MyBatis 等等框架中都大量使用了反射机制。</p>
+<p><strong>这些框架中也大量使用了动态代理，而动态代理的实现也依赖反射。</strong></p>
+<p>比如下面是通过 JDK 实现动态代理的示例代码，其中就使用了反射类 <code>Method</code> 来调用指定的方法。</p>
+<p><img src="C:\Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240424155858229.png" alt="image-20240424155858229"></p>
+<p>外，像 Java 中的一大利器 <strong>注解</strong> 的实现也用到了反射。</p>
+<p>为什么你使用 Spring 的时候 ，一个<code>@Component</code>注解就声明了一个类为 Spring Bean 呢？为什么你通过一个 <code>@Value</code>注解就读取到配置文件中的值呢？究竟是怎么起作用的呢？</p>
+<p>这些都是因为你可以基于反射分析类，然后获取到类&#x2F;属性&#x2F;方法&#x2F;方法的参数上的注解。你获取到注解之后，就可以做进一步的处理。</p>
+<h1 id="注解"><a href="#注解" class="headerlink" title="注解"></a>注解</h1><h3 id="14-何谓注解？"><a href="#14-何谓注解？" class="headerlink" title="14.何谓注解？"></a>14.<a target="_blank" rel="noopener" href="https://javaguide.cn/java/basis/java-basic-questions-03.html#%E4%BD%95%E8%B0%93%E6%B3%A8%E8%A7%A3">何谓注解？</a></h3><p><code>Annotation</code> （注解） 是 Java5 开始引入的新特性，可以看作是一种特殊的注释，主要用于修饰类、方法或者变量，提供某些信息供程序在编译或者运行时使用。</p>
+<p>注解本质是一个继承了<code>Annotation</code> 的特殊接口：</p>
+<p><img src="C:\Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240424160103501.png" alt="image-20240424160103501"></p>
+<p>JDK 提供了很多内置的注解（比如 <code>@Override</code>、<code>@Deprecated</code>），同时，我们还可以自定义注解。</p>
+<h3 id="15-注解的解析方法有哪几种？"><a href="#15-注解的解析方法有哪几种？" class="headerlink" title="15.注解的解析方法有哪几种？"></a>15.<a target="_blank" rel="noopener" href="https://javaguide.cn/java/basis/java-basic-questions-03.html#%E6%B3%A8%E8%A7%A3%E7%9A%84%E8%A7%A3%E6%9E%90%E6%96%B9%E6%B3%95%E6%9C%89%E5%93%AA%E5%87%A0%E7%A7%8D">注解的解析方法有哪几种？</a></h3><p>注解只有被解析之后才会生效，常见的解析方法有两种：</p>
+<ul>
+<li><strong>编译期直接扫描</strong>：编译器在编译 Java 代码的时候扫描对应的注解并处理，比如某个方法使用<code>@Override</code> 注解，编译器在编译的时候就会检测当前的方法是否重写了父类对应的方法。</li>
+<li><strong>运行期通过反射处理</strong>：像框架中自带的注解(比如 Spring 框架的 <code>@Value</code>、<code>@Component</code>)都是通过反射来进行处理的。</li>
+</ul>
+
+      </div>
+      
+      
+      
+    </div>
+
+    
+    
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">hzf</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
