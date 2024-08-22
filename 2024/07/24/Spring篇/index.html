@@ -200,7 +200,7 @@
 <h3 id="5-Spring-MVC"><a href="#5-Spring-MVC" class="headerlink" title="5.Spring MVC"></a>5.Spring MVC</h3><p>M-Model 模型（完成业务逻辑：有javaBean构成，service+dao+entity）</p>
 <p>V-View 视图（做界面的展示 jsp，html……）</p>
 <p>C-Controller 控制器（接收请求—&gt;调用模型—&gt;根据结果派发页面）</p>
-<p><img src="/.io//Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240501091209217.png" alt="image-20240501091209217"></p>
+<p><img src="/2024/07/24/Spring%E7%AF%87/Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240501091209217.png" alt="image-20240501091209217"></p>
 <p>1、 用户发送请求至前端控制器<strong>DispatcherServlet</strong>。</p>
 <p>2、 DispatcherServlet收到请求调用<strong>HandlerMapping</strong>处理器映射器。</p>
 <p>3、 <strong>处理器映射器找到具体的处理器</strong>(可以根据xml配置、注解进行查找)，<strong>生成处理器对象及处理器拦截器</strong>(如果有则生成)一并返回给DispatcherServlet。</p>
@@ -267,7 +267,7 @@
 
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 方式二 通过beanFactory获取bean对象</span></span><br><span class="line"><span class="type">Resource</span> <span class="variable">resources</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClassPathResource</span>(<span class="string">"applicationContext.xml"</span>);</span><br><span class="line"><span class="type">BeanFactory</span> <span class="variable">bf</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">XmlBeanFactory</span>(resources);</span><br><span class="line"><span class="type">BookDao</span> <span class="variable">bookDao</span> <span class="operator">=</span> bf.getBean(BookDao.class);</span><br></pre></td></tr></tbody></table></figure>
 
-<p><img src="/.io//Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240506092732154.png" alt="image-20240506092732154"></p>
+<p><img src="/2024/07/24/Spring%E7%AF%87/Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240506092732154.png" alt="image-20240506092732154"></p>
 <p>使用@Qualifier实现按照名称注入</p>
 <h3 id="12-Bean的作用域有哪些"><a href="#12-Bean的作用域有哪些" class="headerlink" title="12. Bean的作用域有哪些"></a>12. Bean的作用域有哪些</h3><p>singletion： IoC 容器中只有唯一的 bean 实例。Spring 中的 bean 默认都是单例的，是对单例设计模式的应用。</p>
 <p>prototype：每次获取都会创建一个新的 bean 实例。也就是说，连续 <code>getBean()</code> 两次，得到的是不同的 Bean 实例。</p>

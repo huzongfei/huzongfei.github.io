@@ -229,10 +229,10 @@
 <p>解决方案：</p>
 <p><font color="red">延迟双删</font> — <strong>先删除Redis缓存数据，再更新MySQL,延迟几百毫秒再删除Redis缓存数据</strong>，这样就算再更新MySQL时，有其他线程读了MySQL,把老数据读到了Redis,那么也会被删除掉，从而把数据保持一致。</p>
 <p>队列+重试机制 — 更新数据库数据；缓存因为种种问题删除失败；<strong>将需要删除的key发送至消息队列</strong>； 自己消费消息，获取需要删除的key； 继续重试删除操作，直到成功</p>
-<img src="/.io//Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240724112802213.png" alt="image-20240724112802213" style="zoom:33%;">
+<img src="/2024/07/24/%E7%AE%80%E5%8E%86%E9%97%AE%E9%A2%98%E8%A7%A3%E7%AD%94/07/24/简历问题解答/undefined" alt="image-20240724112802213" style="zoom:33%;">
 
 <p>异步更新缓存(基于订阅binlog的同步机制) — MySQL中产生了新的写入、更新、删除等操作，就可以把binlog相关的消息推送到Redis,Redis再根据binlog中的记录，对Redis进行更新。</p>
-<img src="/.io//Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240724113404112.png" alt="image-20240724113404112" style="zoom:33%;">
+<img src="/2024/07/24/%E7%AE%80%E5%8E%86%E9%97%AE%E9%A2%98%E8%A7%A3%E7%AD%94/07/24/简历问题解答/undefined" alt="image-20240724113404112" style="zoom:33%;">
 
 
 
@@ -447,7 +447,7 @@
 </ol>
 <p>重启<code>cart-service</code>，然后访问查询购物车接口，sentinel的客户端就会将服务访问的信息提交到<code>sentinel-dashboard</code>控制台。并展示出统计信息</p>
 <p>服务熔断</p>
-<p><img src="/.io//Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240619172808269.png" alt="image-20240619172808269"></p>
+<p><img src="/2024/07/24/%E7%AE%80%E5%8E%86%E9%97%AE%E9%A2%98%E8%A7%A3%E7%AD%94/Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240619172808269.png" alt="image-20240619172808269"></p>
 <p>哪里用到Seata(分布式事务)</p>
 <h2 id="智购校园"><a href="#智购校园" class="headerlink" title="智购校园"></a>智购校园</h2><h3 id="项目整体技术框架"><a href="#项目整体技术框架" class="headerlink" title="项目整体技术框架"></a>项目整体技术框架</h3><p><strong>我们项目基于微服务技术架构，围绕业务拆分了十个核心的业务微服务，分别是：会员服务、系统服务、商品服务、营销服务、搜索服务、购物车服务、订单服务、支付服务、认证服务、物流服务。</strong></p>
 <p>项目前后端分离开发和部署。前端分了平台运营管理、会员小程序端、团长端三个终端。</p>
@@ -471,12 +471,12 @@
 <p><strong>首页数据显式：</strong></p>
 <p><strong>Feign远程调用流程：</strong></p>
 <p>编写远程服务调用接口</p>
-<p><img src="/.io//Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240624202133664.png" alt="image-20240624202133664"></p>
-<p><img src="/.io//Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240624201933692.png" alt="image-20240624201933692"></p>
+<p><img src="/2024/07/24/%E7%AE%80%E5%8E%86%E9%97%AE%E9%A2%98%E8%A7%A3%E7%AD%94/Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240624202133664.png" alt="image-20240624202133664"></p>
+<p><img src="/2024/07/24/%E7%AE%80%E5%8E%86%E9%97%AE%E9%A2%98%E8%A7%A3%E7%AD%94/Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240624201933692.png" alt="image-20240624201933692"></p>
 <p>引入依赖</p>
-<p><img src="/.io//Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240624202010505.png" alt="image-20240624202010505"></p>
+<p><img src="/2024/07/24/%E7%AE%80%E5%8E%86%E9%97%AE%E9%A2%98%E8%A7%A3%E7%AD%94/Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240624202010505.png" alt="image-20240624202010505"></p>
 <p>调用</p>
-<p><img src="/.io//Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240624202321769.png" alt="image-20240624202321769"></p>
+<p><img src="/2024/07/24/%E7%AE%80%E5%8E%86%E9%97%AE%E9%A2%98%E8%A7%A3%E7%AD%94/Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240624202321769.png" alt="image-20240624202321769"></p>
 <p><strong>利用线程池技术加速数据加载，提高用户体验。</strong></p>
 <h3 id="业务流程"><a href="#业务流程" class="headerlink" title="业务流程"></a>业务流程</h3><h4 id="利用MQ和ES实现商品上下架"><a href="#利用MQ和ES实现商品上下架" class="headerlink" title="利用MQ和ES实现商品上下架"></a>利用MQ和ES实现商品上下架</h4><p>商品上下架这块也是我做的。业务需求是这样的，检索商品时，我们设计了单独的检索微服务，底层利用Elasticsearch进行实现，这是因为<strong>Elasticsearch支持分词、性能高、支持复杂语法查询。</strong></p>
 <p>所以当商品上架后，需要将商品信息同步到Elasticsearch中，在<strong>实现的过程中，因为涉及到多次微服务之间的调用，而这个商品上下架业务流程并不需要等待ES同步完毕再响应请求。</strong>于是我们就<strong>使用RabbitMQ进行解耦</strong>，将上下架流程和同步数据到Elasticsearch的流程分离解耦。</p>
@@ -660,7 +660,7 @@
 <p>添加依赖—–在Spring Boot主应用程序类上<strong>添加<code>@EnableFeignClients</code>注解</strong>以启用Feign客户端——编写<code>OpenFeign</code>客户端—–使用<code>FeignClient</code>改造代码</p>
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 编写OpenFeign客户端</span></span><br><span class="line"><span class="meta">@FeignClient("item-service")</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">ItemClient</span> {</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping("/items")</span>   声明请求方式和请求路径</span><br><span class="line">    List&lt;ItemDTO&gt; <span class="title function_">queryItemByIds</span><span class="params">(<span class="meta">@RequestParam("ids")</span> Collection&lt;Long&gt; ids)</span>;  <span class="comment">//声明请求参数</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-<p><img src="/.io//Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240722095129101.png" alt="image-20240722095129101"></p>
+<p><img src="/2024/07/24/%E7%AE%80%E5%8E%86%E9%97%AE%E9%A2%98%E8%A7%A3%E7%AD%94/Users\huzongfei\AppData\Roaming\Typora\typora-user-images\image-20240722095129101.png" alt="image-20240722095129101"></p>
 <h3 id="数据库的优化方式"><a href="#数据库的优化方式" class="headerlink" title="数据库的优化方式"></a>数据库的优化方式</h3><ul>
 <li><p><strong>避免使用select * ,会发生回表查询</strong></p>
 </li>
